@@ -2,7 +2,7 @@
  * @Author: 羊驼
  * @Date: 2023-04-27 11:47:24
  * @LastEditors: 羊驼
- * @LastEditTime: 2024-05-22 11:28:37
+ * @LastEditTime: 2024-05-22 16:30:53
  * @Description: 节点编辑器
 -->
 <template>
@@ -12,7 +12,7 @@
     append-to-body
     direction="rtl"
     :before-close="saveData"
-    size="560px"
+    :size="size"
   >
     <template v-if="approverConfig">
       <div
@@ -69,6 +69,12 @@
 <script>
 export default {
   inject: ["findNode"],
+  props: {
+    size: {
+      type: String,
+      default: "500px",
+    },
+  },
   computed: {
     // 获取表单组件
     getFormComponent() {

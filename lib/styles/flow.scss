@@ -624,6 +624,10 @@
 
 .set_promoter {
 
+    .edit_button {
+        margin: 0 10px;
+    }
+
     .mb-20.el-descriptions {
         margin-top: 10px !important;
     }
@@ -741,7 +745,7 @@
         bottom         : 0;
         left           : 0;
         padding        : 24px;
-        justify-content: flex-end;
+        justify-content: flex-end !important;
         background     : #fff;
         width          : 100%;
         border-top     : 1px solid #ebebeb;

@@ -1,6 +1,6 @@
 {
   "name": "yt-workflow",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "a custom yt-workflow",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",

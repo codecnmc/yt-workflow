@@ -11,97 +11,55 @@
 
     或者
 
-    npm i yt-workflow
+    cnpm i yt-workflow
 
 ```javascript
 // 借助于element-ui作为UI框架 请先有安装Elment的情况 这边不打包element进去了 因为会体积会从80-90KB 并且没法优化 变成1M多
 import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
-import WorkFlow from "@/assets/index.js";
+import Definition from "./plugins/Flow/Definition";
+Vue.use(ElementUI);
 Vue.use(WorkFlow, {
   //创建完节点立即打开抽屉
-  createPopupImmediately: true,
+  createPopupImmediately: false,
   // 配置可选下拉项 也可以通过this.$factory.resetDataFields(对象) 设置
   dataFields: {
     submitter: { name: "提交人", conditions: ["属于", "不属于"], values: [{ label: "123", value: "123" }], single: false },
+    submitter2: {
+      name: "提交人2",
+      conditions: ["属于", "不属于"],
+      values: [
+        {
+          label: "123",
+          children: [
+            { label: "456", value: "456" },
+            { label: "789", value: "789" },
+          ],
+        },
+      ],
+      single: true,
+    },
+  },
+  // 自定义节点
+  custom: [Definition],
+  // 重写条件的 保存和文字处理
+  condition: {
+    textHandle: (setting) => {
+      return ["1"];
+    },
+    saveHandle: (setting) => {
+      return true;
+    },
   },
 });
-let factory=Vue.prototype.$factory
+let factory = Vue.prototype.$factory;
 // 下面是开放的方法
- /**
-   * @description: 注册类型
-   * @param {*} typeName 类型名称
-   * @param {*} typeValue 类型值
-   * @param {*} color 标题颜色
-   * @param {*} icon 图标
-   * @return {*}
-   */
-  rigsterType(typeName, typeValue, color = "rgb(230, 162, 60)", icon = "", btn_class = "")
-// 创建自定义的节点
 /**
-   * @description: 创建自定义的节点
-   * @param {*} filename 节点组件名称
-   * @param {*} view  节点组件
-*/
-  createCustomNodeComponent(filename, view)
-
-/**
-   * @description: 节点创建
-   * @param {number} type 节点类型
-   * @param {string} nodeName 渲染组件的标题
-   * @param {string} filename 节点渲染的组件名称
-   * @param {string} form 节点渲染的表单
-   * @param {object} setting 返回节点nodeConfig.setting的结构
-   * @param {function} textSetting 文字处理
-   * @param {function} saveSetting 保存前校验
-   * @return {*}
-   */
-  createNode(type, setting, textSetting, saveSetting, nodeName = "节点", filename = "Normal", form = "NodeForm")
-  // 返回的结构
-   {
-      filename,
-      type,
-      form,
-      getStruct(fatherID, childNode, level) {
-        return {
-          nodeName,
-          error: true,
-          type,
-          nodeId: getUUID(),
-          setting,
-          childNode,
-          fatherID,
-          level,
-        };
-      },
-      handleText(nodeConfig) {
-        let nodeSetting = nodeConfig.setting;
-        let text = textSetting(nodeSetting);
-        if (Array.isArray(text)) {
-          return (text.length > 0 && text) || ["暂无配置"];
-        }
-        return ["暂无配置"];
-      },
-      beforeSave(nodeConfig) {
-        let nodeSetting = nodeConfig.setting;
-        return saveSetting(nodeSetting);
-      },
-    };
-
-  /**
-   * @description: 注册自定义节点的 node数据结构和它对应的表单
-   * @param {*} type 类型
-   * @param {*} node 节点数据
-   * @param {*} view 节点组件
-   */
-  registerComponent(type, node, view)
-
-  /**
-   * @description: 重置下拉选项数据
-   * @param {*} dataFields 对象
-   * @return {*}
-   */
-  resetDataFields(dataFields)
+ * @description: 重置下拉选项数据
+ * @param {*} dataFields 对象
+ * @return {*}
+ */
+resetDataFields(dataFields);
 //
 ```
 
@@ -116,6 +74,7 @@ let factory=Vue.prototype.$factory
       height="600px"
       header-height="60px"
       ref="flow"
+      drawer-width="400px"
     >
       <!-- <template #header>
         自定义header
@@ -153,56 +112,46 @@ export default {
 ## 注册一个自定义组件的示例
 
 ```javascript
-import CeshiForm from "./views/ceshiForm";
-let factory = Vue.prototype.$factory;
-let nodeType = factory.nodeType;
-// 自定义类型文字 节点头颜色 图标
-factory.rigsterType("测试", 10, "red", require("@/assets/1.jpeg"));
-factory.registerComponent(
-  nodeType.测试,
-  factory.createNode(
-    nodeType.测试,
-    // setting数据
-    {
-      id: 1,
-    },
-    // 显示文字处理
-    (config) => {
-      if (config.id == 1) return ["123", "456"];
-      return [];
-    },
-    // 保存前校验
-    (config) => {
-      if (config.id == 1) return true;
-      return false;
-    },
-    // 节点名称
-    "测试节点",
-    // 节点文件 默认有Normal 需要定制自己createCustomNodeComponent引入
-    "Normal", // 使用默认节点
-    // 表单名称
-    "CeshiForm"
-  ),
-  // 使用表单的vue
-  CeshiForm
-);
+// "./plugins/Flow/Definition/index.js"
+import view from "./index.vue";
+export default {
+  nodeName: "定义",
+  viewComponent: view,
+  nodeComponent: null,
+  // 允许覆盖同名
+  type: {
+    name: "定义",
+    value: 10,
+    color: null,
+    icon: null,
+    btnClass: "",
+  },
+  setting: {
+    id: 1,
+  },
+  textHandle: (config) => {
+    return ["暂无配置"];
+  },
+  saveHandle: (config) => {
+    return true;
+  },
+};
 ```
 
 ```javascript
-// ceshiForm.vue
+// "./plugins/Flow/Definition/index.vue"
 <template>
   <el-form
-    class="form"
+    class="yt-form"
     label-position="top"
   >
-    <el-form-item label="id">
-      <el-input v-model="setting.id" />
-    </el-form-item>
+    {{setting.id}}
   </el-form>
 </template>
 
 <script>
 export default {
+  name: "definitionForm",
   data() {
     return {};
   },
@@ -327,4 +276,6 @@ export default {
 };
 ```
 
-## 对节点不满意的话 可以通过 registerComponent 覆盖 自己注册所有节点 但是不建议覆盖条件分支、条件、删除块的类型
+## 对节点不满意的话 可以通过一开始的 custom 去覆盖对应的 type
+
+## 优化中的项目 所以版本提交改动会多

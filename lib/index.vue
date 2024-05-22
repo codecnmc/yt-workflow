@@ -52,7 +52,10 @@
         </div>
       </div>
     </div>
-    <editor ref="editor"></editor>
+    <editor
+      ref="editor"
+      :size="drawerWidth"
+    ></editor>
   </div>
 </template>
 
@@ -76,6 +79,10 @@ export default {
     height: {
       type: String,
       default: "100vh",
+    },
+    "drawer-width": {
+      type: String,
+      default: "500px",
     },
   },
   components: {
