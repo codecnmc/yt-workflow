@@ -2,7 +2,7 @@
  * @Author: 羊驼
  * @Date: 2024-05-21 14:59:30
  * @LastEditors: 羊驼
- * @LastEditTime: 2024-05-21 15:41:01
+ * @LastEditTime: 2024-05-22 11:54:21
  * @Description: file content
  */
 const path = require("path");
@@ -54,6 +54,12 @@ module.exports = {
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        use: {
+          loader: "url-loader",
+        },
+      },
+      {
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
         use: {
           loader: "url-loader",
         },

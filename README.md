@@ -6,15 +6,17 @@
 ![演示](https://img-blog.csdnimg.cn/direct/cbc545c322044b69a4d0941aecafc45d.png#pic_center)
 
     使用方法:
-    
+
     下载dist/index.js并导入到项目中
-    
+
     或者
-    
+
     npm i yt-workflow
-    
 
 ```javascript
+// 借助于element-ui作为UI框架 请先有安装Elment的情况 这边不打包element进去了 因为会体积会从80-90KB 并且没法优化 变成1M多
+import ElementUI from "element-ui";
+import "element-ui/lib/theme-chalk/index.css";
 import WorkFlow from "@/assets/index.js";
 Vue.use(WorkFlow, {
   //创建完节点立即打开抽屉
@@ -105,7 +107,7 @@ let factory=Vue.prototype.$factory
 
 ## 使用示例
 
-``` javascript
+```javascript
 <template>
   <div>
     <work-flow
@@ -183,7 +185,7 @@ factory.registerComponent(
   ),
   // 使用表单的vue
   CeshiForm
-)
+);
 ```
 
 ```javascript

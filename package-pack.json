@@ -1,0 +1,35 @@
+{
+  "name": "yt-workflow",
+  "version": "0.0.3",
+  "description": "此包用于clone到本地 自己打包用的 改为package.json 把依赖下完 运行build 即可获得dist/index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "files": ["dist/*"],
+  "repository": {
+    "url": "https://github.com/codecnmc/yt-workflow"
+  },
+  "scripts": {
+    "build": "webpack --mode production",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "core-js": "^3.6.5",
+    "element-ui": "^2.15.3",
+    "uuid": "^9.0.0",
+    "vue": "^2.6.11"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.4",
+    "@vue/cli-service": "~4.5.4",
+    "deepmerge": "^4.3.1",
+    "sass": "^1.32.13",
+    "sass-loader": "^10.1.1",
+    "vue-loader": "^15.4.2",
+    "vue-style-loader": "^4.1.3",
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^4.15.1",
+    "webpack-cli": "^3.0.8"
+  },
+  "author": "yt",
+  "license": "MIT"
+}
