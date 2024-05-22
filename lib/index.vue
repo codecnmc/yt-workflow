@@ -1,13 +1,48 @@
 <template>
-  <div class="workflow">
+  <div
+    class="workflow"
+    :style="{height:calHeight,position}"
+  >
+    <div
+      class="header"
+      v-if="header"
+      :style="{height:`${headerHeight}`}"
+    >
+      <slot name="header">
+        <div class="btn-style">
+          <el-button
+            type="primary"
+            @click="exportData"
+          >导出数据</el-button>
+          <el-button
+            type="success"
+            @click="importData"
+          >导入数据</el-button>
+        </div>
+        <div class="zoom flex">
+          <div
+            class="zoom-out"
+            :class="{'disabled':nowVal==50}"
+            @click="zoomSize(0)"
+          ></div>
+          <span>{{nowVal}}%</span>
+          <div
+            class="zoom-in"
+            :class="{'disabled':nowVal==300}"
+            @click="zoomSize(1)"
+          ></div>
+        </div>
+      </slot>
+    </div>
     <div
       class="approval-flow fd-nav-content"
-      style="top:0"
+      :style="{top:`${header?`${headerHeight}px`:'0px'}`}"
     >
       <div class="dingflow-design">
         <div
           class="box-scale"
           id="box-scale"
+          :style="'transform: scale('+nowVal/100+'); transform-origin: 50% 0px 0px;'"
         >
           <nodeWrap
             v-bind="$attrs"
@@ -25,6 +60,24 @@
 import Editor from "./components/Editor.vue";
 import NodeWrap from "./components/NodeWrap.vue";
 export default {
+  props: {
+    header: {
+      type: Boolean,
+      default: false,
+    },
+    "header-height": {
+      type: String,
+      default: "60px",
+    },
+    fullscreen: {
+      type: Boolean,
+      default: true,
+    },
+    height: {
+      type: String,
+      default: "100vh",
+    },
+  },
   components: {
     NodeWrap,
     Editor,
@@ -57,6 +110,12 @@ export default {
   computed: {
     nodeType() {
       return this.$factory.nodeType;
+    },
+    position() {
+      return this.fullscreen ? "absolute" : "relative";
+    },
+    calHeight() {
+      return this.fullscreen ? "100vh" : this.height;
     },
   },
   // 初始化节点
@@ -106,9 +165,7 @@ export default {
     },
     // 导出的结构数据
     exportStruct() {
-      return {
-        nodeConfig: this.nodeConfig,
-      };
+      return this.nodeConfig;
     },
     // 导出数据
     exportData() {
@@ -201,12 +258,15 @@ export default {
       }
     },
     // 缩放比例调整
-    zoomSize(type) {
+    zoomSize(type, target) {
       let value = this.nowVal;
       if (!type && value > 50) {
         this.nowVal -= 10;
       } else if (type && value < 300) {
         this.nowVal += 10;
+      }
+      if (target) {
+        this.nowVal = value;
       }
     },
     // 打开编辑框

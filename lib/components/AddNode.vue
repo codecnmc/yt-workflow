@@ -114,7 +114,11 @@ export default {
       }
 
       //添加节点自动弹出弹框
-      this.config.createPopupImmediately && this.openDrawer(data);
+      if (
+        this.config.createPopupImmediately &&
+        data.type != this.nodeType.条件分支
+      )
+        this.openDrawer(data);
     },
   },
 };

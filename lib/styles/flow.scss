@@ -1,7 +1,8 @@
 .header {
-    display   : flex;
-    padding   : 10px 10px 10px 30px;
-    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, .06);
+    display        : flex;
+    justify-content: space-between;
+    padding        : 10px 10px 10px 30px;
+    box-shadow     : 0 1px 6px 0 rgba(0, 0, 0, .06);
 
     .zoom {
         span {
@@ -44,11 +45,6 @@
     }
 
 
-}
-
-.btn-style {
-    position: fixed;
-    right   : 60px;
 }
 
 .workflow {
@@ -136,7 +132,7 @@
 }
 
 .fd-nav-content {
-    position      : fixed;
+    position      : absolute;
     top           : 60px;
     left          : 0;
     right         : 0;

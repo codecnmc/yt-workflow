@@ -6,8 +6,13 @@
 ![演示](https://img-blog.csdnimg.cn/direct/cbc545c322044b69a4d0941aecafc45d.png#pic_center)
 
     使用方法:
-
+    
     下载dist/index.js并导入到项目中
+    
+    或者
+    
+    npm i yt-workflow
+    
 
 ```javascript
 import WorkFlow from "@/assets/index.js";
@@ -98,7 +103,52 @@ let factory=Vue.prototype.$factory
 //
 ```
 
-# 注册一个自定义组件的示例
+## 使用示例
+
+``` javascript
+<template>
+  <div>
+    <work-flow
+      header
+      :fullscreen="true"
+      height="600px"
+      header-height="60px"
+      ref="flow"
+    >
+      <!-- <template #header>
+        自定义header
+      </template> -->
+    </work-flow>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "App",
+  methods: {
+    flowMethod() {
+      // 从文件导入数据
+      this.$refs.flow.importData();
+      // 直接赋值数据
+      this.$refs.flow.loadData(data);
+      // 导出数据结构
+      this.$refs.flow.exportStruct();
+      // 导出数据为文件
+      this.$refs.flow.exportData();
+      // 校验数据
+      this.$refs.flow.validate();
+      // 缩放视图 0变小 1增大 或者zoomSize(0,目标值)
+      this.$refs.flow.zoomSize(0);
+    },
+  },
+};
+</script>
+<style lang="scss" scoped>
+</style>
+
+```
+
+## 注册一个自定义组件的示例
 
 ```javascript
 import CeshiForm from "./views/ceshiForm";
@@ -133,14 +183,7 @@ factory.registerComponent(
   ),
   // 使用表单的vue
   CeshiForm
-);e;
-    },
-    "测试节点",
-    "Normal", // 使用默认节点
-    "CeshiForm"
-  ),
-  CeshiForm
-);
+)
 ```
 
 ```javascript
@@ -282,4 +325,4 @@ export default {
 };
 ```
 
-# 对节点不满意的话 可以通过 registerComponent 覆盖 自己注册所有节点 但是不建议覆盖条件分支、条件、删除块的类型
+## 对节点不满意的话 可以通过 registerComponent 覆盖 自己注册所有节点 但是不建议覆盖条件分支、条件、删除块的类型
