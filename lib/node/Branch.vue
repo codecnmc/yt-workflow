@@ -2,7 +2,7 @@
  * @Author: 羊驼
  * @Date: 2023-04-25 10:57:30
  * @LastEditors: 羊驼
- * @LastEditTime: 2024-05-21 14:05:51
+ * @LastEditTime: 2024-05-22 15:37:44
  * @Description: 分支情况
 -->
 <template>
@@ -138,6 +138,7 @@ export default {
     addTerm() {
       // 添加条件必须在默认前 否则影响判断
       let len = this.conditions.length;
+
       this.conditions.splice(
         len - 1,
         0,
@@ -149,6 +150,7 @@ export default {
           len
         )
       );
+
       this.checkCondtions();
     },
     // 调整条件位置
@@ -157,15 +159,23 @@ export default {
       if (type == 1 && index + 1 == this.conditions.length - 1) {
         return this.$message.error("无法移动到最后! 其他情况必须在最后");
       }
+      switch (type) {
+        case -1:
+          this.conditions[index].priorityLevel -= 1;
+          this.conditions[index - 1].priorityLevel += 1;
+          break;
+        case 1:
+          this.conditions[index].priorityLevel += 1;
+          this.conditions[index + 1].priorityLevel -= 1;
+          break;
+      }
       //向左-1,向右1
       this.conditions[index] = this.conditions.splice(
         index + type,
         1,
         this.conditions[index]
       )[0];
-      this.conditions.map((item, index) => {
-        item.priorityLevel = index + 1;
-      });
+
       this.checkCondtions();
     },
     //删除条件

@@ -7,10 +7,10 @@
 -->
 <template>
   <el-form
-    class="form"
+    class="yt-form"
     label-position="top"
   >
-  
+
   </el-form>
 </template>
 

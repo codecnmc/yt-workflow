@@ -2,13 +2,13 @@
  * @Author: 羊驼
  * @Date: 2023-04-25 16:38:35
  * @LastEditors: 羊驼
- * @LastEditTime: 2024-05-21 11:43:05
+ * @LastEditTime: 2024-05-22 15:00:35
  * @Description: 条件表单
 -->
 
 <template>
   <el-form
-    class="form"
+    class="yt-form"
     label-position="top"
   >
     <!-- 默认条件 -->

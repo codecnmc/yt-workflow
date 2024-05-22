@@ -4,7 +4,7 @@
     :style="{height:calHeight,position}"
   >
     <div
-      class="header"
+      class="flow-header"
       v-if="header"
       :style="{height:`${headerHeight}`}"
     >
@@ -35,7 +35,7 @@
       </slot>
     </div>
     <div
-      class="approval-flow fd-nav-content"
+      class="approval-flow"
       :style="{top:`${header?`${headerHeight}px`:'0px'}`}"
     >
       <div class="dingflow-design">
