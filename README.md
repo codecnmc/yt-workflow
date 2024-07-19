@@ -282,5 +282,5 @@ export default {
 
 演示使用该项目的demo地址：
 
-[地址]: https://github.com/codecnmc/simple-server
+[demo地址](https://github.com/codecnmc/simple-server)
 
